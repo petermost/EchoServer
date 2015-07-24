@@ -1,20 +1,20 @@
-#include "EchoServer.hpp"
+#include "EchoServerQt5.hpp"
 #include <QTcpServer>
 #include <QTcpSocket>
 
-EchoServer::EchoServer( QObject *parent )
+EchoServerQt5::EchoServerQt5( QObject *parent )
 	: QObject( parent ) {
 	server_ = new QTcpServer( parent );
 }
 
-bool EchoServer::start( const QHostAddress &host, quint16 port ) {
+bool EchoServerQt5::start( const QHostAddress &host, quint16 port ) {
 	connect( server_, &QTcpServer::newConnection, [ = ] {
 		onConnected( server_->nextPendingConnection() );
 	});
 	return server_->listen( host, port );
 }
 
-void EchoServer::onConnected( QTcpSocket *socket ) {
+void EchoServerQt5::onConnected( QTcpSocket *socket ) {
 	Q_ASSERT( socket != nullptr );
 	emit clientConnected( socket );
 
@@ -31,18 +31,18 @@ void EchoServer::onConnected( QTcpSocket *socket ) {
 	});
 }
 
-void EchoServer::onReadyRead( QTcpSocket *socket ) {
+void EchoServerQt5::onReadyRead( QTcpSocket *socket ) {
 	QByteArray data = socket->readAll();
 	emit dataReceived( socket, data );
 	socket->write( data );
 
 }
 
-void EchoServer::onBytesWritten( QTcpSocket *socket, qint64 count ) {
+void EchoServerQt5::onBytesWritten( QTcpSocket *socket, qint64 count ) {
 	emit dataSent( socket, count );
 }
 
-void EchoServer::onDisconnected( QTcpSocket *socket ) {
+void EchoServerQt5::onDisconnected( QTcpSocket *socket ) {
 	emit clientDisconnected( socket );
 	socket->deleteLater();
 }

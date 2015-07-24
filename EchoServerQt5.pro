@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-TARGET = EchoServer
+TARGET = EchoServerQt5
 
 QT       += core network
 QT       -= gui
@@ -15,11 +15,12 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp \
-	EchoServer.cpp
+SOURCES += \
+    EchoServerQt5.cpp \
+    mainQt5.cpp
 
 HEADERS += \
-	EchoServer.hpp
+    EchoServerQt5.hpp
 
 DISTFILES += \
 	README.md

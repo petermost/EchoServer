@@ -6,10 +6,10 @@ class QTcpSocket;
 class QTcpServer;
 class QHostAddress;
 
-class EchoServer : public QObject {
+class EchoServerQt5 : public QObject {
 	Q_OBJECT
 	public:
-		explicit EchoServer( QObject *parent = nullptr );
+		explicit EchoServerQt5( QObject *parent = nullptr );
 
 		bool start( const QHostAddress &, quint16 port );
 
