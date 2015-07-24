@@ -15,8 +15,6 @@ bool EchoServerQt5::start( const QHostAddress &host, quint16 port ) {
 }
 
 void EchoServerQt5::onConnected( QTcpSocket *socket ) {
-	Q_ASSERT( socket != nullptr );
-	emit clientConnected( socket );
 
 	connect( socket, &QTcpSocket::readyRead, [ = ] {
 		onReadyRead( socket );
@@ -29,13 +27,13 @@ void EchoServerQt5::onConnected( QTcpSocket *socket ) {
 	connect( socket, &QTcpSocket::disconnected, [ = ] {
 		onDisconnected( socket );
 	});
+
+	emit connected( socket );
 }
 
 void EchoServerQt5::onReadyRead( QTcpSocket *socket ) {
 	QByteArray data = socket->readAll();
 	emit dataReceived( socket, data );
-	socket->write( data );
-
 }
 
 void EchoServerQt5::onBytesWritten( QTcpSocket *socket, qint64 count ) {
@@ -43,6 +41,6 @@ void EchoServerQt5::onBytesWritten( QTcpSocket *socket, qint64 count ) {
 }
 
 void EchoServerQt5::onDisconnected( QTcpSocket *socket ) {
-	emit clientDisconnected( socket );
+	emit disconnected( socket );
 	socket->deleteLater();
 }

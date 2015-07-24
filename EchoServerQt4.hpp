@@ -5,11 +5,12 @@
 class QTcpSocket;
 class QTcpServer;
 class QHostAddress;
+class EchoClientQt4;
 
-class EchoServerQt5 : public QObject {
+class EchoServerQt4 : public QObject {
 	Q_OBJECT
 	public:
-		explicit EchoServerQt5( QObject *parent = nullptr );
+		explicit EchoServerQt4( QObject *parent = nullptr );
 
 		bool start( const QHostAddress &, quint16 port );
 
@@ -17,16 +18,14 @@ class EchoServerQt5 : public QObject {
 		void connected( QTcpSocket * );
 		void disconnected( QTcpSocket * );
 
-		void dataReceived( QTcpSocket *, const QByteArray & );
+		void dataReceived( QTcpSocket *socket, const QByteArray &data );
 		void dataSent( QTcpSocket *, qint64 count );
 
 	public slots:
 
 	private:
-		void onConnected( QTcpSocket *socket );
-		void onDisconnected( QTcpSocket *socket );
-		void onReadyRead( QTcpSocket *socket );
-		void onBytesWritten( QTcpSocket *socket, qint64 count );
+		void onNewConnection();
+		void onDisconnected( EchoClientQt4 *client, QTcpSocket *socket );
 
 		QTcpServer *server_;
 };

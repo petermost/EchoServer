@@ -1,5 +1,5 @@
 #include <QCoreApplication>
-#include "EchoServerQt5.hpp"
+#include "EchoServerQt4.hpp"
 #include <QHostAddress>
 #include <QTcpSocket>
 
@@ -16,20 +16,20 @@ int main(int argc, char *argv[]) {
 
 	QCoreApplication application(argc, argv);
 
-	EchoServerQt5 *echoServer = new EchoServerQt5( &application );
-	QObject::connect( echoServer, &EchoServerQt5::connected, []( QTcpSocket *socket ) {
+	EchoServerQt4 *echoServer = new EchoServerQt4( &application );
+	QObject::connect( echoServer, &EchoServerQt4::connected, []( QTcpSocket *socket ) {
 		out << "Accepted connection from " << *socket << endl;
 	});
 
-	QObject::connect( echoServer, &EchoServerQt5::disconnected, []( QTcpSocket *socket ) {
+	QObject::connect( echoServer, &EchoServerQt4::disconnected, []( QTcpSocket *socket ) {
 		out << "Disconnected from " << *socket << endl;
 	});
 
-	QObject::connect( echoServer, EchoServerQt5::dataReceived, []( QTcpSocket *socket, const QByteArray &data ) {
+	QObject::connect( echoServer, EchoServerQt4::dataReceived, []( QTcpSocket *socket, const QByteArray &data ) {
 		out << "Received data from " << *socket << ": " << data << endl;
 	});
 
-	QObject::connect( echoServer, EchoServerQt5::dataSent, []( QTcpSocket *socket, qint64 count ) {
+	QObject::connect( echoServer, EchoServerQt4::dataSent, []( QTcpSocket *socket, qint64 count ) {
 		out << "Sent data to " << *socket << ": " << count << endl;
 	});
 
