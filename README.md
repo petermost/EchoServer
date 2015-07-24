@@ -1,2 +1,2 @@
-# QDiscard
-A small Qt program which works like the discard service
+# EchoServer
+A small Qt prototype which works like the echo service
